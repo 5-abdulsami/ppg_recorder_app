@@ -7,7 +7,6 @@ import '../data/services/haptics_service.dart';
 import '../data/services/native_platform_bridge.dart';
 import '../data/services/permission_service.dart';
 import '../data/services/ppg_extraction_service.dart';
-import '../data/services/share_service.dart';
 
 /// Registers app-wide services behind their interfaces (dependency
 /// inversion — controllers depend on abstractions, swappable in tests).
@@ -19,7 +18,6 @@ class InitialBinding extends Bindings {
       ..put<CameraService>(PluginCameraService(), permanent: true)
       ..put<PermissionService>(PluginPermissionService(), permanent: true)
       ..put<HapticsService>(PlatformHapticsService(), permanent: true)
-      ..put<ShareService>(PluginShareService(), permanent: true)
       ..put<AppInfoService>(PluginAppInfoService(), permanent: true)
       ..put<PpgExtractionService>(
         PpgExtractionService(decoder: bridge),

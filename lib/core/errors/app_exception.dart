@@ -29,9 +29,6 @@ enum AppErrorType {
 
   /// Writing result files failed.
   saveFailed,
-
-  /// Opening the share sheet failed.
-  shareFailed,
 }
 
 /// Typed exception carrying an [AppErrorType] plus technical details for

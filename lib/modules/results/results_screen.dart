@@ -94,7 +94,7 @@ class ResultsScreen extends GetView<ResultsController> {
     BuildContext context,
     SavedRecording files,
   ) async {
-    final share = await showDialog<bool>(
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         icon: const Icon(Icons.check_circle, color: AppColors.qualityGood),
@@ -102,19 +102,12 @@ class ResultsScreen extends GetView<ResultsController> {
         content: SingleChildScrollView(child: _SavedPaths(files: files)),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text(AppStrings.close),
-          ),
-          FilledButton.icon(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(minimumSize: const Size(0, 44)),
-            icon: const Icon(Icons.ios_share),
-            label: const Text(AppStrings.share),
           ),
         ],
       ),
     );
-    if (share == true && context.mounted) await _share(context, null);
   }
 
   Future<void> _confirmDiscard(
@@ -146,24 +139,6 @@ class ResultsScreen extends GetView<ResultsController> {
       await controller.discardAndExit();
     }
   }
-}
-
-Future<void> _share(BuildContext context, Rect? origin) async {
-  final controller = Get.find<ResultsController>();
-  try {
-    await controller.shareSaved(origin: origin ?? _screenCentre(context));
-  } on AppException catch (e) {
-    if (context.mounted) _showError(context, e);
-  }
-}
-
-Rect _screenCentre(BuildContext context) {
-  final size = MediaQuery.sizeOf(context);
-  return Rect.fromCenter(
-    center: Offset(size.width / 2, size.height / 2),
-    width: 1,
-    height: 1,
-  );
 }
 
 void _showError(BuildContext context, AppException e) {
@@ -570,26 +545,7 @@ class _SavedActions extends GetView<ResultsController> {
           ),
         ),
         const SizedBox(height: 16),
-        Builder(
-          builder: (buttonContext) => Obx(
-            () => FilledButton.icon(
-              onPressed: controller.isSharing.value
-                  ? null
-                  : () {
-                      final box =
-                          buttonContext.findRenderObject() as RenderBox?;
-                      final origin = box == null || !box.hasSize
-                          ? null
-                          : box.localToGlobal(Offset.zero) & box.size;
-                      _share(buttonContext, origin);
-                    },
-              icon: const Icon(Icons.ios_share),
-              label: const Text(AppStrings.shareFiles),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
-        OutlinedButton.icon(
+        FilledButton.icon(
           onPressed: controller.recordAgainSamePatient,
           icon: const Icon(Icons.replay),
           label: const Text(AppStrings.recordAgainSamePatient),

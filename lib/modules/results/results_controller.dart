@@ -4,12 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../app/app_routes.dart';
-import '../../core/constants/app_strings.dart';
 import '../../data/models/processed_recording.dart';
 import '../../data/models/saved_recording.dart';
 import '../../data/repositories/recording_repository.dart';
 import '../../data/services/app_info_service.dart';
-import '../../data/services/share_service.dart';
 import '../../signal/models/quality_level.dart';
 import '../../signal/signal_quality_analyzer.dart';
 
@@ -37,22 +35,19 @@ class WaveformSeries {
   final List<double> values;
 }
 
-/// State and actions of the results screen: waveform selection, saving,
-/// sharing and navigation. Discards the pending video if the screen is left
+/// State and actions of the results screen: waveform selection, saving
+/// and navigation. Discards the pending video if the screen is left
 /// without saving.
 class ResultsController extends GetxController {
   /// Creates the controller.
   ResultsController({
     required RecordingRepository repository,
     required AppInfoService appInfo,
-    required ShareService share,
   }) : _repository = repository,
-       _appInfo = appInfo,
-       _share = share;
+       _appInfo = appInfo;
 
   final RecordingRepository _repository;
   final AppInfoService _appInfo;
-  final ShareService _share;
 
   ProcessedRecording? _recording;
   bool _pendingReleased = false;
@@ -74,9 +69,6 @@ class ResultsController extends GetxController {
 
   /// Written files, once saved.
   final Rxn<SavedRecording> saved = Rxn<SavedRecording>();
-
-  /// True while the share sheet is being opened.
-  final RxBool isSharing = false.obs;
 
   /// Quality report shortcut.
   SignalQualityReport get report => recording.analysis.report;
@@ -156,23 +148,6 @@ class ResultsController extends GetxController {
     } catch (_) {
       status.value = SaveStatus.unsaved;
       rethrow;
-    }
-  }
-
-  /// Opens the share sheet for the saved files. Throws `AppException`.
-  Future<void> shareSaved({Rect? origin}) async {
-    final files = saved.value;
-    if (files == null || isSharing.value) return;
-    isSharing.value = true;
-    try {
-      await _share.shareFiles(
-        files.allPaths,
-        subject: AppStrings.shareSubject,
-        text: AppStrings.shareText(recording.session.patientId),
-        origin: origin,
-      );
-    } finally {
-      isSharing.value = false;
     }
   }
 

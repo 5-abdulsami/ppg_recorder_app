@@ -19,8 +19,8 @@ No backend, no network, no accounts.
    the centre 64×64 px ROI is averaged per channel.
 4. **Results** – waveform (red/green, filtered/raw), quality score and
    summary. **Save & Export** (warns if quality is not "good", but lets the
-   researcher decide) or **Discard & Retake**. Saved files can be shared via
-   the system share sheet.
+   researcher decide) or **Discard & Retake**. Copy the saved files off the
+   device over USB (Android) or via the Files app (iOS).
 
 ## Where files are saved
 
@@ -78,7 +78,7 @@ lib/
                  live monitor, quality analyzer (fully unit-tested)
   data/
     services/    Camera (camera plugin), native video decoder bridge,
-                 permissions, share, haptics, app/device info
+                 permissions, haptics, app/device info
     repositories/RecordingRepository – all file I/O (pending + saved)
     serializers/ CSV encoder, metadata JSON, file naming
   modules/       GetX controller + binding + screen per page

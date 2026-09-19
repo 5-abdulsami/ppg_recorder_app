@@ -94,7 +94,6 @@ abstract final class AppStrings {
     AppErrorType.extractionFailed => 'Signal extraction failed',
     AppErrorType.videoTooShort => 'Recording too short',
     AppErrorType.saveFailed => 'Saving failed',
-    AppErrorType.shareFailed => 'Sharing failed',
   };
 
   static String errorMessage(AppErrorType type) => switch (type) {
@@ -126,9 +125,6 @@ abstract final class AppStrings {
     AppErrorType.saveFailed =>
       'The files could not be saved. The recording is still here — try '
           'saving again.',
-    AppErrorType.shareFailed =>
-      'The share sheet could not be opened. The files are saved on the '
-          'device.',
   };
 
   static const String technicalDetails = 'Details';
@@ -142,7 +138,7 @@ abstract final class AppStrings {
   static const String viewFiltered = 'Filtered';
   static const String viewRaw = 'Raw';
   static const String filteredCaption =
-      'Band-pass 0.7–3.0 Hz (Sphygma pipeline) — display only. The CSV '
+      'Band-pass 0.7–3.0 Hz — display only. The CSV '
       'stores raw values.';
   static const String rawCaption = 'Raw ROI mean intensity (as saved in CSV).';
   static const String waveformUnavailable =
@@ -159,13 +155,11 @@ abstract final class AppStrings {
   static const String saveAndExport = 'Save & Export';
   static const String discardAndRetake = 'Discard & Retake';
   static const String saving = 'Saving…';
-  static const String shareFiles = 'Share Files';
   static const String recordAgainSamePatient = 'Record Again (Same Patient)';
   static const String newPatient = 'New Patient';
   static const String savedTitle = 'Recording saved';
   static const String savedMessage = 'Files were written to:';
   static const String close = 'Close';
-  static const String share = 'Share';
   static const String liveCheckUnavailableNote =
       'Live finger check was unavailable during capture on this device.';
 
@@ -180,11 +174,6 @@ abstract final class AppStrings {
       'The video and extracted signal will be deleted. This cannot be undone.';
   static const String discard = 'Discard';
   static const String keep = 'Keep';
-
-  static const String shareSubject = 'PPG recording';
-  static String shareText(String patientId) =>
-      'PPG recording for patient $patientId (CSV signal, metadata JSON, '
-      'MP4 video).';
 
   static String qualityLevelLabel(QualityLevel level) => switch (level) {
     QualityLevel.good => 'Good',

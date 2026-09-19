@@ -20,6 +20,6 @@ class SavedRecording {
   /// Recorded video (MP4).
   final String videoPath;
 
-  /// All files, in share order.
+  /// All files: CSV, metadata, video.
   List<String> get allPaths => [csvPath, metadataPath, videoPath];
 }

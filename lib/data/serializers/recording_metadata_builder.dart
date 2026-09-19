@@ -46,8 +46,8 @@ abstract final class RecordingMetadataBuilder {
         'method':
             'score = 100*(0.40*finger_coverage + 0.40*max(pulse_confidence) '
             '+ 0.20*stability) - 20*saturation_fraction; pulse confidence = '
-            'Sphygma backend Welch peak/mean ratio in 40-200 bpm on the '
-            'backend-preprocessed signal (8 s windows, 2 s stride)',
+            'Welch peak/mean power ratio in 40-200 bpm on the detrended, '
+            'band-passed (0.7-3.0 Hz) signal (8 s windows, 2 s stride)',
       },
       'extraction': {
         'source': 'recorded video (post-capture decode)',
